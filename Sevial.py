@@ -124,7 +124,7 @@ with st.form("my_form", clear_on_submit = True):
             "Тип санузла",
             ('Совмещенный', 'Раздельный')) # WC 
     upload = st.form_submit_button("Cохранить")
-
+    
 if upload:
     doc = DocxTemplate(uploaded_file)
     context = { 'Номер': number,    # Отчет
@@ -167,5 +167,9 @@ if upload:
 
                 }
     doc.render(context)
-    doc.save("Макет ОПЕКА2.docx") 
+
+st.download_button(
+        'Скачать',
+        data = doc.save("Макет ОПЕКА2.docx") ,
+        file_name = 'Макет ОПЕКА2.docx') 
 
