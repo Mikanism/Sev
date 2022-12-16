@@ -1,7 +1,10 @@
 import streamlit as st
 import datetime as dt
 from docxtpl import DocxTemplate
+import docx
+import io
 
+import os
 material_data = ['Панель', 'Кирпич', 'Монолит']
 perecrit_data = ['ж/б', 'Деревянные', 'Смешанные']
 klass_data = ['Эконом', 'Бизнес', 'Элит']
@@ -123,7 +126,7 @@ with st.form("my_form", clear_on_submit = True):
             Wcc = st.radio(
             "Тип санузла",
             ('Совмещенный', 'Раздельный')) # WC 
-    upload = st.form_submit_button("Cохранить")
+    upload = st.form_submit_button("Сохранить")
     
 
 if upload:
@@ -168,5 +171,22 @@ if upload:
 
                 }
     doc.render(context)
-    doc.save('Макет ОПЕКА1.docx')
+    doc.save('Макет_ОПЕКА1.docx')
+
+    doc_download = docx.Document('Макет_ОПЕКА1.docx')
+    bio = io.BytesIO()
+    doc_download.save(bio)
+    
+    if doc_download:
+        st.download_button(
+            label="Скачать",
+            data=bio.getvalue(),
+            file_name="Макет_ОПЕКА1.docx",
+            mime="docx"
+        )
+    
+    
+
+
+
 
