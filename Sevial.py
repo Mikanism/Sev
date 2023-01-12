@@ -186,7 +186,7 @@ if upload:
                     'Стекло': steklo,
                     'WC': Wcc,
                     'Вид': vid,
-                    'Состоние': status,
+                    'Состояние': status,
                     'Тех': tech,
                     'Обор': obor,
                     'Год_дома': yyear,  # Здание и подъезд
