@@ -167,7 +167,8 @@ if upload:
                     'Право': prava,
                     'Обрем': obrem,
                     'Док1': docs,
-                    'Док2': docs2,    
+                    'Док2': docs2,
+                    'Доки': docs + docs2,
                     'Адрес' : adres,    # Объект оценки
                     'Обладать' : prav_oblad,
                     'Кадастр': kadast_number,  
