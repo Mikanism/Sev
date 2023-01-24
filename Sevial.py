@@ -43,6 +43,7 @@ st.title('Отчет')
 
 
 
+
 with st.form("my_form", clear_on_submit = True):
     tab1, tab2, tab3, tab4 = st.tabs(["Задание на оценку", "Объект оценки", "Здание и подъезд",'фото'])
     with tab1:
@@ -147,14 +148,21 @@ with st.form("my_form", clear_on_submit = True):
         "",
         ('Домофон', 'Кодовый замок', 'Консьерж в подъезде'), horizontal = True)
     with tab4:
-        pic = st.file_uploader('Выберете фото')
-        
+       
+
+        pic = st.file_uploader('Карта Области')
+        pic1 = st.file_uploader('Карта Метро')
     upload = st.form_submit_button("Сохранить")
     
 if upload:
     with st.spinner('Wait for it...'):
         doc = DocxTemplate('Макет ОПЕКА.docx')
-        imagen = InlineImage(doc, pic, width=Mm(150))
+        map_obl = ''
+        map_metro = ''
+        if pic != None:
+            map_obl = InlineImage(doc, pic, width=Mm(180), height=Mm(73))
+        if pic1 != None:
+            map_metro = InlineImage(doc, pic1, width=Mm(180), height=Mm(73))
 
         context = { 'Номер': number,    # Задание на оценку
                     'Дата_Оценки': date_ocenki.strftime(format = "%d.%m.%Y"), 
@@ -202,7 +210,8 @@ if upload:
                     'Перим': q3, 
                     'Охрана': q4, 
                     'Домофон': q5,
-                    'imagen': imagen
+                    'map_obl': map_obl,
+                    'map_metro': map_metro
                     }
         
         #imagen = InlineImage(doc, pic, width=Mm(150))# width is in millimetres
