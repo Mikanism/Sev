@@ -445,6 +445,7 @@ if add_selectbox == 'Загрузить':
                         #json.dump(context, f,  ensure_ascii = False)
                     con = sqlite3.connect('Testdb.sqlite')
                     cur = con.cursor()
+                    cur.execute("DELETE FROM otchet WHERE Номер = ?", (context['Номер'],))
                     pd.DataFrame([context]).to_sql('otchet', con, if_exists = 'append', index = False)
                     con.close()
 
