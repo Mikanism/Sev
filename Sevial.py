@@ -199,18 +199,14 @@ if add_selectbox == "ОПЕКА":
                         'Перим': q3, 
                         'Охрана': q4, 
                         'Домофон': q5,
-                        #'map_obl': map_obl,
-                        #'map_metro': map_metro
+                        'map_obl': map_obl,
+                        'map_metro': map_metro
                         }
             
-            #data = {'number': context['Номер']}
-            #imagen = InlineImage(doc, pic, width=Mm(150))# width is in millimetres
-            #context_pic = {'imagen': imagen}
-            #with open('db.json', 'w', encoding = 'utf-8') as f:
-                #json.dump(context, f,  ensure_ascii = False)
+            
             con = sqlite3.connect('Testdb.sqlite')
             cur = con.cursor()
-            pd.DataFrame([context]).to_sql('otchet', con, if_exists = 'append', index = False)
+            pd.DataFrame([dict(list(context.items())[:-2])]).to_sql('otchet', con, if_exists = 'append', index = False)
             con.close()
 
             doc.render(context)
@@ -292,7 +288,7 @@ if add_selectbox == 'Загрузить':
 
                     pr1, pr2 = st.columns(2)
                     with pr1:
-                        price = st.number_input('Рыночная стоимость', format = '%d', value = int(df['Стоимость'][0].replace(' ', '')))
+                        price = st.number_input('Рыночная стоимость', format = '%d', value = int(str(df['Стоимость'][0]).replace(' ', '')))
                     with pr2:
                         pr_propis = st.text_input('Цена прописью', df['Стоим_Пропись'][0])
 
@@ -434,19 +430,14 @@ if add_selectbox == 'Загрузить':
                                 'Перим': q3, 
                                 'Охрана': q4, 
                                 'Домофон': q5,
-                                #'map_obl': map_obl,
-                                #'map_metro': map_metro
+                                'map_obl': map_obl,
+                                'map_metro': map_metro
                                 }
                     
-                    #data = {'number': context['Номер']}
-                    #imagen = InlineImage(doc, pic, width=Mm(150))# width is in millimetres
-                    #context_pic = {'imagen': imagen}
-                    #with open('db.json', 'w', encoding = 'utf-8') as f:
-                        #json.dump(context, f,  ensure_ascii = False)
                     con = sqlite3.connect('Testdb.sqlite')
                     cur = con.cursor()
                     cur.execute("DELETE FROM otchet WHERE Номер = ?", (context['Номер'],))
-                    pd.DataFrame([context]).to_sql('otchet', con, if_exists = 'append', index = False)
+                    pd.DataFrame([dict(list(context.items())[:-2])]).to_sql('otchet', con, if_exists = 'append', index = False)
                     con.close()
 
                     doc.render(context)
